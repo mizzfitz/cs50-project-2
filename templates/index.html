@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div id="msgs-cont">
+	{% if error %}
+	<h3>{{ error }}</h3>
+	{% endif %}
+</div>
+{% endblock %}
