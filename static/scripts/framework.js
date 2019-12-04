@@ -14,20 +14,20 @@ class Text {
 }
 
 class Input {
-  constructor(hint, style) {
+  constructor(type='text', style, hint) {
     // a function to create a text input field
 
     self.attach = document.createElement('input');
-    self.attach.setAttribute('type', 'text');
+    self.attach.setAttribute('type', type);
 
     self.hint = (hint) => {self.attach.setAttribute('hint', hint);}
     self.style = self.attach.className;
 
     if (hint !== undefined) {
       self.hint(hint);
-      if (style !== undefined) {
-        self.style = style;
-      }
+    }
+    if (style !== undefined) {
+      self.style = style;
     }
   }
 }
@@ -53,7 +53,22 @@ class Message {
 class Room_link {
   constructor(value) {
     self.attach = document.createElement('option');
-    self.attach.setAttribute('value', value);
+    self.attach.setAttribute('value', '/' + value);
     self.attach.innerHTML = value;
+  }
+}
+
+class Msg_form {
+  // a class for generating a message input 
+  constructor() {
+    self.attach = document.createElement('div');
+    const form = document.createElement('form');
+    const input = new Input('textfield');
+    const submit = new Input('submit');
+    submit.attach.addAttribute('value', 'Send');
+
+    // create parent/child tree
+    self.attach.append(form);
+    form.append(input, submit);
   }
 }
