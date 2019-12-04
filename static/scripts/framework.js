@@ -33,7 +33,7 @@ class Input {
 }
 
 class Message {
-  constructor(message, usr, time) {
+  constructor(usr, time, message) {
     // a function to create a message element
 
     // initiate the dom hierarchy
