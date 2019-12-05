@@ -58,6 +58,36 @@ class Room_link {
   }
 }
 
+class popup {
+  constructor(text, btnText) {
+    self.attach = document.createElement('form');
+    self.error = document.createElement('div');
+    const text = new Text(text);
+    const input = new Input();
+    self.value = input.value;
+    const btn = new Input('submit');
+    btn.attach.addAtribute('value', btnText);
+    self.attach.append(self.error, text, input, btn);
+
+    self.setFunction() = funct => {
+      // defines a function to process the form. Provides a variable value (valie of the text nox)
+      // and a function error (for an error in the form submission, taking an error msg as an argument)
+      // as context
+      let value = self.value;
+      const error = self.errorHandler();
+      self.attach.onsubmit = funct;
+    };
+
+  }
+
+  errorHandler(str) {
+    self.value = '';
+    // a line to clear the self.error
+    self.error.append(new Text(str));
+  }
+
+}
+
 class Msg_form {
   // a class for generating a message input 
   constructor() {

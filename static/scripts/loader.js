@@ -25,21 +25,26 @@ function load_rooms(attach) {
   return rooms;
 }
 
-function load_msgs(attach, namespc) {
+function load_msgs(attach, namespc, room=false) {
   // a function to load messages
   //
   // clear attach point
-  //
-  // init request
-  const request = new XMLHttpRequest();
-  request.open('GET', namespc);
 
-  request.onload = () => {
-    const data = JSON.parse(request.responseText);
+  if room {
+    // init request
+    const request = new XMLHttpRequest();
+    request.open('GET', namespc);
 
-    data.forEach(vals => {
-      const msg = new Message(vals[0], vals[1], vals[2]);
-      attach.append(msg.attach);
-    });
+    request.onload = () => {
+      const data = JSON.parse(request.responseText);
+
+      data.forEach(vals => {
+        const msg = new Message(vals[0], vals[1], vals[2]);
+        attach.append(msg.attach);
+      });
+    }
+  } else {
+    const text = new Text('There doesn\'t appear to be a chat room here. You can find one from the dropdown selection.');
+    attach.append(text);
   }
 }
