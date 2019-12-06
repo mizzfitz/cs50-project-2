@@ -11,7 +11,7 @@ channels={}
 
 @app.route("/")
 def index():
-    return render_template("index.html", channels=channels)
+    return render_template("unit.html")
 
 @app.route("/<string:url_ext>")
 def channel(url_ext):

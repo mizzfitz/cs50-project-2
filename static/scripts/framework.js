@@ -1,8 +1,9 @@
+alert('loaded');
 class Text {
-  constructor(text, style, type='p') {
-    // a function to create a new text object, typically a <p> element but with options to define it as a <span> or whatever.  Does not escape text.
-    
-    self.attach = document.createElement(type);
+  constructor(text='', style, type='p') {
+    // a function to create a new text object, typically a <p> element but with options to define it as a <span> or whatever.  Does not escape text
+
+    self.attach = document.createElement('p');
     self.attach.innerHTML = text;
     if (style !== undefined) {
       self.attach.className = style;
@@ -10,6 +11,8 @@ class Text {
 
     self.text = p.innerHTML;
     self.style = p.className;
+
+    return self.attach;
   }
 }
 

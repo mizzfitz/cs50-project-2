@@ -1,0 +1,26 @@
+<!doctype html>
+
+<html>
+  <head>
+		<script type='text/javascript' src="{{ url_for('static', filename='scripts/framework.js') }}"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const basic = new Text(document.querySelector('#add'), 'Basic text');
+        const style = new Text(document.querySelector('#add'), 'style text', 'style', 'h1');
+        document.querySelector('#add').append(basic.attach, style.attach);
+        class Thing {
+          constructor(name) {
+            this.name = name;
+            this.value = 'wifi';
+          }
+        }
+        const thing = new Thing('what');
+        document.querySelector('#add').append(thing.name, thing.value);
+      });
+    </script>
+  </head>
+  <body>
+    <div id='add'>
+    </div>
+  </body>
+</html>
