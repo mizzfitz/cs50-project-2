@@ -12,6 +12,7 @@ channels={}
 @app.route("/")
 def index():
     return render_template("unit.html")
+    #return app.static_folder
 
 @app.route("/<string:url_ext>")
 def channel(url_ext):
