@@ -2,12 +2,28 @@
 
 <html>
   <head>
-		<script type='text/javascript' src="{{ url_for('static', filename='scripts/framework.js') }}"></script>
     <script>
+class Text {
+  constructor(container, text='', style, type='p') {
+    // a function to create a new text object, typically a <p> element but with options to define it as a <span> or whatever.  Does not escape text
+
+    self.attach = document.createElement(type);
+    self.attach.innerHTML = text;
+    if (style !== undefined) {
+      self.attach.className = style;
+    }
+
+    self.text = self.attach.innerHTML;
+    self.style = self.attach.className;
+    container.append(self.attach);
+  }
+}
       document.addEventListener('DOMContentLoaded', () => {
         const basic = new Text(document.querySelector('#add'), 'Basic text');
         const style = new Text(document.querySelector('#add'), 'style text', 'style', 'h1');
-        document.querySelector('#add').append(basic.attach, style.attach);
+        const p = document.createElement('p');
+        p.innerHTML = 'paragraph';
+        document.querySelector('#add').append(basic.text, style.attach, p);
         class Thing {
           constructor(name) {
             this.name = name;
