@@ -2,14 +2,16 @@
 
 <html>
   <head>
-    <script type="text/javascript" src="{{ url_for('static', filename='framework.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='scripts/framework.js') }}"></script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-        const basic = new Text(document.querySelector('#add'), 'Basic text');
-        const style = new Text(document.querySelector('#add'), 'style text', 'style', 'h1');
+        const basic = newText(document.querySelector('#add'), 'Basic text');
+        const style = newText(document.querySelector('#add'), 'style text', 'style', 'h1');
         const p = document.createElement('p');
         p.innerHTML = 'paragraph';
-        document.querySelector('#add').append(basic.text, style.attach, p);
+        document.querySelector('#add').append(basic.text, style.connector, p);
+        const input = newInput(document.querySelector('#add'));
+        const fancyInput = newInput(document.querySelector('#add'), 'textfield');
         class Thing {
           constructor(name) {
             this.name = name;

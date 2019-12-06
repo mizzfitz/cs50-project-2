@@ -1,106 +1,43 @@
 alert('loaded');
-class Text {
-  constructor(container, text='', style, type='p') {
-    // a function to create a new text object, typically a <p> element but with options to define it as a <span> or whatever.  Does not escape text
-
-    self.attach = document.createElement(type);
-    self.attach.innerHTML = text;
-    if (style !== undefined) {
-      self.attach.className = style;
-    }
-
-    self.text = self.attach.innerHTML;
-    self.style = self.attach.className;
-    container.append(self.attach);
-  }
+function newElement(container=document.querySelector('body'), type='p') {
+  const element = document.createElement(type);
+  const result = container.appendChild(element);
+  return result;
 }
 
-class Input {
-  constructor(type='text', style, hint) {
-    // a function to create a text input field
+function newText(container, text='', style, type='p') {
+  // a function to create a new text object, typically a <p> element but with options to define it as a <span> or whatever.  Does not escape text
 
-    self.attach = document.createElement('input');
-    self.attach.setAttribute('type', type);
-
-    self.hint = (hint) => {self.attach.setAttribute('hint', hint);}
-    self.style = self.attach.className;
-
-    if (hint !== undefined) {
-      self.hint(hint);
-    }
-    if (style !== undefined) {
-      self.style = style;
-    }
+  const attach = newElement(container, type);
+  attach.innerHTML = text;
+  if (style !== undefined) {
+    attach.className = style;
   }
+  let result = {
+    connector: attach,
+    text: attach.innerHTML,
+    style: attach.className
+  }
+  return result;
 }
 
-class Message {
-  constructor(usr, time, message) {
-    // a function to create a message element
+function newInput(container, type='text', style, hint) {
+  // a function to create a text input field
 
-    // initiate the dom hierarchy
-    self.attach = document.createElement('div');
-    const usr_name = new Text(usr, 'usr-name');
-    const time_stamp = new Text(time, 'time-stamp');
-    const msg = new Text(message, 'message');
-    self.attach.append(usr_name, time_stamp, msg);
+  const attach = newElement(container, 'input');
+  attach.setAttribute('type', type);
 
-    // initiate attributes
-    self.usr = usr_name.text;
-    self.time = time_stamp.text;
-    self.msg = msg.text;
-  }
-}
-
-class Room_link {
-  constructor(value) {
-    self.attach = document.createElement('option');
-    self.attach.setAttribute('value', '/' + value);
-    self.attach.innerHTML = value;
-  }
-}
-
-class popup {
-  constructor(text, btnText) {
-    self.attach = document.createElement('form');
-    self.error = document.createElement('div');
-    const text = new Text(text);
-    const input = new Input();
-    self.value = input.value;
-    const btn = new Input('submit');
-    btn.attach.addAtribute('value', btnText);
-    self.attach.append(self.error, text, input, btn);
-
-    self.setFunction() = funct => {
-      // defines a function to process the form. Provides a variable value (valie of the text nox)
-      // and a function error (for an error in the form submission, taking an error msg as an argument)
-      // as context
-      let value = self.value;
-      const error = self.errorHandler();
-      self.attach.onsubmit = funct;
-    };
-
+  const result = {
+    connector: attach,
+    hint: (val) => {attach.setAttribute('hint', hint);},
+    style: attach.className,
+    value: attach.value
   }
 
-  errorHandler(str) {
-    self.value = '';
-    // a line to clear the self.error
-    self.error.append(new Text(str));
+  if (hint !== undefined) {
+    result.hint(hint);
   }
-
-}
-
-class Msg_form {
-  // a class for generating a message input 
-  constructor() {
-    self.attach = document.createElement('div');
-    const form = document.createElement('form');
-    const input = new Input('textfield');
-    const submit = new Input('submit');
-    submit.attach.addAttribute('value', 'Send');
-
-    // create parent/child tree
-    self.attach.append(form);
-    form.append(input, submit);
+  if (style !== undefined) {
+    result.style = style;
   }
 }
