@@ -5,21 +5,9 @@
     <script type="text/javascript" src="{{ url_for('static', filename='scripts/framework.js') }}"></script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-        const basic = newText(document.querySelector('#add'), 'Basic text');
-        const style = newText(document.querySelector('#add'), 'style text', 'style', 'h1');
-        const p = document.createElement('p');
-        p.innerHTML = 'paragraph';
-        document.querySelector('#add').append(basic.text, style.connector, p);
-        const input = newInput(document.querySelector('#add'));
-        const fancyInput = newInput(document.querySelector('#add'), 'textfield');
-        class Thing {
-          constructor(name) {
-            this.name = name;
-            this.value = 'wifi';
-          }
-        }
-        const thing = new Thing('what');
-        document.querySelector('#add').append(thing.name, thing.value);
+        ui.newTxt = new Text();
+        ui.newTxt.setText('this is some text');
+        ui.fancyTxt = new Text(querySelector('#add'), 'nice text', 'class-name');
       });
     </script>
   </head>

@@ -1,8 +1,32 @@
 alert('loaded');
-function newElement(container=document.querySelector('body'), type='p') {
-  const element = document.createElement(type);
-  const result = container.appendChild(element);
-  return result;
+var ui = {
+};
+
+class Element{
+  constructor(container=document.querySelector('body'), type='p', style) {
+    const element = document.createElement(type);
+    this.connector = container.appendChild(element);
+    if (style !== undefined) {
+      this.setStyle(style)
+    }
+  }
+
+  setStyle(style) {
+    this.connector.className = style;
+  }
+}
+
+class Text extends Element{
+  constructor(container, text, style, type='p') {
+    super(container, type, style);
+    if (text !== undefined) {
+      this.setText(text);
+    }
+  }
+
+  setText(text) {
+    this.connector.innerHTML = text;
+  }
 }
 
 function newText(container, text='', style, type='p') {
@@ -13,12 +37,7 @@ function newText(container, text='', style, type='p') {
   if (style !== undefined) {
     attach.className = style;
   }
-  let result = {
-    connector: attach,
-    text: attach.innerHTML,
-    style: attach.className
-  }
-  return result;
+  return {connector: attach};
 }
 
 function newInput(container, type='text', style, hint) {
@@ -40,4 +59,20 @@ function newInput(container, type='text', style, hint) {
   if (style !== undefined) {
     result.style = style;
   }
+
+  return result;
+}
+
+function createRoom(container, val) {
+  const attach = newElement(container, 'option');
+  
+  const result = {
+    connector: attach,
+    value: attach.value,
+    style: attach.className,
+    text: attach.innerHTML
+  }
+
+  result.value = '/' + val;
+  result.text = val;
 }
