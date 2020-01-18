@@ -13,10 +13,10 @@ channels={}
 def index():
     return render_template("unit.html")
 
-@app.route("/<string:url_ext>")
-def channel(url_ext):
-    if channels.get(url_ext):
-        return render_template("channel.html", channels=channels, messages=channels[url_ext])
+@app.route("/<string:channelName>")
+def channel(channelName):
+    if channels.get(channelName):
+        return render_template("channel.html", channels=channels, messages=channels[channelName])
 
     return render_template("index.html", channels=channels, error="404: That channel does not appear to exist.  Please choose another")
 
