@@ -6,19 +6,15 @@ function createHTMLElement() {
   let attributes = [];
 
   if (arguments.length < 2) {
-    alert('insuficient length');
     throw ERRARGS;
   }
   if (!document.body.contains(arguments[0])) {
-    alert('body');
     throw ERRARGS;
   }
 
   try {
     newElement = document.createElement(arguments[1]);
-    alert('element created');
   } catch(err) {
-    alert('element not created');
     throw ERRARGS;
   }
 

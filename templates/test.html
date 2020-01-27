@@ -5,8 +5,11 @@
     <title>Test</title>
     <script src="{{ url_for('static', filename='scripts/index.js') }}"></script>
   <script>
-    document.addEventListener('onload', () => {
+    document.addEventListener('DOMContentLoaded', () => {
       createHTMLElement(document.querySelector('body'), 'p', {'class':'new-obj', 'id':'newElement'});
+      try {
+      createHTMLElement('p', {'class':'new-obj', 'id':'newElement'});
+      } catch(err) {alert(err.name + ' ' + err.message);}
     });
   </script>
   </head>
