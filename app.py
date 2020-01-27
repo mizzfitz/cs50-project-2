@@ -11,7 +11,7 @@ channels={}
 
 @app.route("/")
 def index():
-    return render_template("unit.html")
+    return render_template("test.html")
 
 @app.route("/<string:channelName>")
 def channel(channelName):

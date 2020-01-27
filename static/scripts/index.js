@@ -1,19 +1,24 @@
 function createHTMLElement() {
-  const ERRARGS = {name: "errArgs", message: "The first argument must be a DOM element and the second element must be a valid name of a type of DOM element"}
+  const ERRARGS = {name: "errArgs", message: "The first argument must be a DOM element and the second element must be a valid name of a type of DOM element"};
+  const ERRATTR = {name: "errAttr", message: "Attribute is undefined or invalid"};
 
   let newElement = undefined;
   let attributes = [];
 
   if (arguments.length < 2) {
+    alert('insuficient length');
     throw ERRARGS;
   }
   if (!document.body.contains(arguments[0])) {
+    alert('body');
     throw ERRARGS;
   }
 
   try {
     newElement = document.createElement(arguments[1]);
+    alert('element created');
   } catch(err) {
+    alert('element not created');
     throw ERRARGS;
   }
 
@@ -29,3 +34,12 @@ function createHTMLElement() {
       attributes = arguments[2];
     }
   }
+
+  for (attr in attributes) {
+    try {
+      newElement.setAttribute(attr, attributes[attr]);
+    } catch {
+      throw ERRATTR;
+    }
+  }
+}

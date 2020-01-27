@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Test</title>
+    <script src="{{ url_for('static', filename='scripts/index.js') }}"></script>
+  <script>
+    document.addEventListener('onload', () => {
+      createHTMLElement(document.querySelector('body'), 'p', {'class':'new-obj', 'id':'newElement'});
+    });
+  </script>
+  </head>
+  <body>
+  </body>
+</html>
