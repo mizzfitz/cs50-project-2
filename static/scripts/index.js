@@ -1,41 +1,48 @@
-function createHTMLElement() {
-  const ERRARGS = {name: "errArgs", message: "The first argument must be a DOM element and the second element must be a valid name of a type of DOM element"};
-  const ERRATTR = {name: "errAttr", message: "Attribute is undefined or invalid"};
-
-  let newElement = undefined;
-  let attributes = [];
-
-  if (arguments.length < 2) {
-    throw ERRARGS;
-  }
-  if (!document.body.contains(arguments[0])) {
-    throw ERRARGS;
-  }
-
-  try {
-    newElement = document.createElement(arguments[1]);
-  } catch(err) {
-    throw ERRARGS;
-  }
-
-  newElement = arguments[0].appendChild(newElement);
-
-  if (arguments[2]) {
-    if (typeof arguments[2] === "string") {
-      newElement.innterHTML = arguments[2];
-      if (arguments[3]) {
-        attributes = arguments[3];
-      }
-    } else {
-      attributes = arguments[2];
-    }
-  }
-
-  for (attr in attributes) {
-    try {
-      newElement.setAttribute(attr, attributes[attr]);
-    } catch {
-      throw ERRATTR;
-    }
-  }
+function renderMessage(container, values){
+	const msg = createHTMLElement(container, 'div', {'class': 'message'});
+	const usrName = createHTMLElement(msg, 'h6', values[0]);
+	const timeStamp = createHTMLElement(msg, 'h6', values[1]);
+	const messageTxt = createHTMLElement(msg, 'p', values[2]);
 }
+
+function loadChannel(channel){
+
+	// first we clear any messages from the current channel
+	const container = document.getElementById('messages');
+	while (container.firstChild) {
+		container.removeChild(container.firstChild);
+	}
+
+	// now we make the request and update the messages field
+
+	const request = new XMLHttpRequest();
+	request.open('POST', '/%load%channel')
+
+	request.onload = () => {
+
+		const data = JSON.parse(request.responseText);
+
+		if (data.success) {
+			for (let i = 0; i < data.messages.length; i++){
+				renderMessage(container, data.messages[i]);
+			}
+		} else {
+			createHTMLElement(container, 'h2', 'An error occurred')
+		}
+	}
+
+	const data = new FormData();
+	data.append('channel', channel);
+
+	request.send(data);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+	document.getElementById('channel-select').onchange = function() {
+		if (this.value === "%new"){
+			alert('create a new channel');
+		} else {
+			loadChannel(this.value);
+		}
+	};
+});
