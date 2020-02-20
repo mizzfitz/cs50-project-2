@@ -16,21 +16,24 @@ channels={
 
 @app.route("/")
 def index():
-    return render_template("index.html", channels=channels)
+	channel_list = []
+	for i in channels:
+		channel_list.append(i);
+	return render_template("layout.html", channels=channel_list)
 
 @app.route("/<string:channel>")
 def channel(channel):
-    return render_template("index.html", channels=channels)
+	return render_template("index.html", channels=channels)
 
 @app.route("/%load%channel", methods=["POST"])
 def load_channel():
-    channel = request.form.get("channel")
+	channel = request.form.get("channel")
     
-    if (channels.get(channel)):
-        return jsonify({"success": True, "messages": channels[channel]})
+	if (channels.get(channel)):
+		return jsonify({"success": True, "messages": channels[channel]})
     
-    return jsonify({"success": False})
+	return jsonify({"success": False})
 
 
 if __name__ == "__main__":
-    app.run()
+	app.run()
