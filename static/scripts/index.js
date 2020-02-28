@@ -13,17 +13,32 @@ function newChannelPopup(container){
 	createHTMLElement(form, 'input', {'type':'submit', 'value':'Submit'});
 	form.onsubmit = function() {
 		const value = this.firstChild.value;
+		const channelList = getChannelList();
 		if (value === '') {
 			this.firstChild.nextSibling.innerHTML = 'Channel name must not be empty';
+			return false;
 		} else if (channelList.includes(value)) {
 			this.firstChild.nextSibling.innerHTML = 'Channel name must be unique';
+			return false;
 		} else if (!/^[a-z]+$/i.test(value)) {
 			this.firstChild.nextSibling.innerHTML = 'Must contain only upper and lower case letters';
+			return false;
 		} else {
 			alert('created ' + value);
-			this.remove;
+			return true;
 		}
 	}
+}
+
+function getChannelList(){
+				const select = document.getElementById('channel-select');
+				let list = [];
+
+				for (i = 0; i < select.options.length; i++) {
+								list.push(select.options[i].value);
+				}
+
+				return list;
 }
 
 function loadChannel(channel){
@@ -58,10 +73,7 @@ function loadChannel(channel){
 	request.send(data);
 }
 
-var channelList = []
-
 document.addEventListener('DOMContentLoaded', () => {
-	channelList = JSON.parse(document.getElementById('channel-select').dataset.channellist);
 	document.getElementById('channel-select').onchange = function() {
 		if (this.value === "%new"){
 			newChannelPopup(document.querySelector('body'));
