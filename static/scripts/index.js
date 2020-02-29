@@ -6,11 +6,17 @@ function renderMessage(container, values){
 }
 
 function newChannelPopup(container){
-	alert('running');
 	const form = createHTMLElement(container, 'form', {'id': 'popup'});
+
 	createHTMLElement(form, 'input', {'type':'text', 'id':'channel-name', 'hint':'Channel Name'});
 	createHTMLElement(form, 'p');
 	createHTMLElement(form, 'input', {'type':'submit', 'value':'Submit'});
+
+	const cancelBtn = createHTMLElement(form, 'img', {'src':'#'});
+
+	toggleDisabled(document.getElementById('header'), true);
+	toggleDisabled(document.getElementById('new-message'), true);
+
 	form.onsubmit = function() {
 		const value = this.firstChild.value;
 		const channelList = getChannelList();
@@ -25,20 +31,34 @@ function newChannelPopup(container){
 			return false;
 		} else {
 			alert('created ' + value);
+			toggleDisabled(document.getElementById('header'), false);
+			toggleDisabled(document.getElementById('new-message'), false);
 			return true;
 		}
+	}
+
+	cancelBtn.onclick = function() {
+		toggleDisabled(document.getElementById('header'), false);
+		toggleDisabled(document.getElementById('new-message'), false);
+		this.parentNode.remove();
+	}
+}
+
+function toggleDisabled(container, disabled) {
+	for (i = 0; i < container.children.length; i++) {
+		container.children[i].disabled = disabled;
 	}
 }
 
 function getChannelList(){
-				const select = document.getElementById('channel-select');
-				let list = [];
+	const select = document.getElementById('channel-select');
+	let list = [];
 
-				for (i = 0; i < select.options.length; i++) {
-								list.push(select.options[i].value);
-				}
+	for (i = 0; i < select.options.length; i++) {
+		list.push(select.options[i].value);
+	}
 
-				return list;
+	return list;
 }
 
 function loadChannel(channel){
