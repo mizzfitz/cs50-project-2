@@ -12,13 +12,14 @@ function newChannelPopup(container){
 	createHTMLElement(form, 'p');
 	createHTMLElement(form, 'input', {'type':'submit', 'value':'Submit'});
 
-	const cancelBtn = createHTMLElement(form, 'img', {'src':'#'});
+	const cancelBtn = createHTMLElement(form, 'button', 'X', {'src':'#'});
 
 	toggleDisabled(document.getElementById('header'), true);
 	toggleDisabled(document.getElementById('new-message'), true);
+	toggleDisabled(document.getElementById('header').querySelector('div'), true);
 
 	form.onsubmit = function() {
-		const value = this.firstChild.value;
+		const value = this.querySelector('input').value;
 		const channelList = getChannelList();
 		if (value === '') {
 			this.firstChild.nextSibling.innerHTML = 'Channel name must not be empty';
@@ -33,6 +34,7 @@ function newChannelPopup(container){
 			alert('created ' + value);
 			toggleDisabled(document.getElementById('header'), false);
 			toggleDisabled(document.getElementById('new-message'), false);
+			toggleDisabled(document.getElementById('header').querySelector('div'), false);
 			return true;
 		}
 	}
@@ -40,6 +42,7 @@ function newChannelPopup(container){
 	cancelBtn.onclick = function() {
 		toggleDisabled(document.getElementById('header'), false);
 		toggleDisabled(document.getElementById('new-message'), false);
+		toggleDisabled(document.getElementById('header').querySelector('div'), false);
 		this.parentNode.remove();
 	}
 }
@@ -101,4 +104,30 @@ document.addEventListener('DOMContentLoaded', () => {
 			loadChannel(this.value);
 		}
 	};
+
+	document.getElementById('usr-name').onclick = function () {
+		const form = document.getElementById('usr-name-form');
+		form.style.display = 'inline';
+		form.querySelector('input').value = this.innerHTML;
+		this.style.display = 'none';
+	}
+
+	document.getElementById('usr-name-form').onsubmit = function () {
+		const newUsrName = this.querySelector('input').value
+		const usrNameDisplay = document.getElementById('usr-name');
+
+		if (newUsrName === '') {
+			alert('User tag cannot be empty');
+		} else if (!/^[a-z]+$/i.test(newUsrName)) {
+			alert('User tag must contain only upper and lower case letters');
+		} else {
+			usrNameDisplay.innerHTML = newUsrName;
+			alert('new user name is ' + newUsrName);
+		}
+
+		this.style.display = 'none';
+		usrNameDisplay.style.display = 'inline';
+		return false;
+	}
 });
+

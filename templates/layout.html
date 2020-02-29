@@ -11,7 +11,12 @@
 	<body>
 		<div id="header">
 			<h1>Messenger</h1>
-			<span id="usr-name">guest</span>
+			<div>
+				<button id="usr-name">guest</button>
+				<form style="display:none;" id="usr-name-form">
+					<input type="text" hint="User Tag">
+				</form>
+			</div>
 			<select id="channel-select" data-channelList="{{ channels }}">
 				{% for opt in channels %}
 				<option value="{{ opt }}">{{ opt }}</option>
